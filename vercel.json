@@ -11,6 +11,9 @@
   ],
   "routes": [
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "https://bmw-backend-l85a.onrender.com/api/$1"
     },
