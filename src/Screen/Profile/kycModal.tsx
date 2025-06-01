@@ -49,8 +49,7 @@ export default function KYCModal({ onClose, onSuccess }: KYCModalProps) {
       const response = await apiService.post("/kyc/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
-      console.log("Response from API:", response.data);
+      console.log("Response received:", response);
 
       onSuccess();
     } catch (err: any) {

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import apiService from "@/Components/APIService/ApiService";
+import { apiService } from "@/components/APIService/ApiService";
 import { format, isToday, isYesterday, startOfWeek, endOfWeek } from "date-fns";
-import Message from "@/Components/Common/NotFoundPage/Message";
 
 type Transaction = {
   _id: string;
@@ -133,10 +132,10 @@ const TransactionSection = () => {
         </Link>
       </div>
 
-      {error && <Message message="Something went Wrong" />}
+      {error}
 
       {!error && Object.keys(groupedTransactions).length === 0 && (
-        <Message message="No transactions available." />
+        <div className="text-center text-gray-500">No transactions found.</div>
       )}
 
       {Object.entries(groupedTransactions).map(([date, transactions]) => (

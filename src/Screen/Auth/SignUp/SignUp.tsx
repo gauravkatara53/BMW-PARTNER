@@ -5,7 +5,7 @@ import { ClipLoader } from "react-spinners";
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [_error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate
 
