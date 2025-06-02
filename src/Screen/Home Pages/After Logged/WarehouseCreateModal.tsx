@@ -476,7 +476,7 @@ export default function WarehouseCreateModal() {
                   ...form,
                   price: [
                     ...form.price,
-                    { title: "", amount: "", isMonthly: false },
+                    { title: "", amount: 0, isMonthly: false }, // ✅ amount is a number
                   ],
                 })
               }
@@ -503,7 +503,7 @@ export default function WarehouseCreateModal() {
                   value={p.amount}
                   onChange={(e) => {
                     const updated = [...form.price];
-                    updated[i].amount = e.target.value;
+                    updated[i].amount = Number(e.target.value); // ✅ Convert to number
                     setForm({ ...form, price: updated });
                   }}
                 />
