@@ -3,12 +3,12 @@ import { useState, ChangeEvent } from "react";
 
 interface Price {
   title: string;
-  amount: number | string;
+  amount: number;
   isMonthly: boolean;
 }
 interface Room {
   name: string;
-  units: string;
+  units: number;
 }
 
 interface Facility {
@@ -28,7 +28,7 @@ interface FormState {
   about: string;
   category: string;
   rentOrSell: "Rent" | "Sell";
-  areaSqFt: string;
+  areaSqFt: number;
   location: { coordinates: [string, string] };
   address: string;
   city: string;
@@ -60,7 +60,7 @@ export default function WarehouseCreateModal() {
     about: "",
     category: "",
     rentOrSell: "Rent",
-    areaSqFt: "",
+    areaSqFt: 0,
     location: { coordinates: ["", ""] },
     address: "",
     city: "",
@@ -219,7 +219,7 @@ export default function WarehouseCreateModal() {
       about: "",
       category: "",
       rentOrSell: "Rent",
-      areaSqFt: "",
+      areaSqFt: 0,
       location: { coordinates: ["", ""] },
       address: "",
       city: "",
@@ -319,7 +319,7 @@ export default function WarehouseCreateModal() {
                 onClick={() =>
                   setForm({
                     ...form,
-                    rooms: [...form.rooms, { name: "", units: "" }],
+                    rooms: [...form.rooms, { name: "", units: 0 }],
                   })
                 }
               >
@@ -345,7 +345,7 @@ export default function WarehouseCreateModal() {
                     value={p.units}
                     onChange={(e) => {
                       const updated = [...form.rooms];
-                      updated[i].units = e.target.value;
+                      updated[i].units = Number(e.target.value); // ✅ convert to number
                       setForm({ ...form, rooms: updated });
                     }}
                   />
