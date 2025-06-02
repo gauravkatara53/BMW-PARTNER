@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Ensure you are using React Router
+// import { useNavigate } from "react-router-dom"; // Ensure you are using React Router
 import { apiService } from "@/components/APIService/ApiService";
 import Navbar from "@/components/Navbar";
 import { CheckCircle, AlertTriangle, LogOut } from "lucide-react";
@@ -16,13 +16,14 @@ interface PartnerProfile {
 }
 
 export default function PartnerProfilePage() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [profile, setProfile] = useState<PartnerProfile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
-  const [loggingOut, setLoggingOut] = useState(false);
+  const [loggingOut, setIsLoadingLogOut] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [_error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -85,22 +86,40 @@ export default function PartnerProfilePage() {
   };
 
   const handleLogout = async () => {
-    setLoggingOut(true);
+    console.log("handleLogout called");
+    setIsLoadingLogOut(true);
+
+    // ✅ Define the response type inline
+    interface LogoutResponse {
+      statusCode: number;
+      data: Record<string, any>;
+      message: string;
+      success: boolean;
+      errors: any;
+      timestamp: string;
+    }
+
     try {
-      await apiService.post("partner/loginOut", {}); // Step 1: logout API call
+      // ✅ Use the type with apiService.post
+      const res: LogoutResponse = await apiService.post<LogoutResponse>(
+        "/partner/loginOut",
+        {}
+      );
 
-      // Step 2: clear all non-HttpOnly cookies
-      document.cookie.split(";").forEach((cookie) => {
-        const eqPos = cookie.indexOf("=");
-        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
-      });
+      console.log("Logout response:", res);
 
-      // Step 3: redirect
-      navigate("/");
-    } catch (err) {
-      console.error("Logout failed", err);
-      setLoggingOut(false);
+      if (res.statusCode === 200 && res.success) {
+        console.log("✅ Logout successful:", res.message);
+        window.location.href = "/signin";
+      } else {
+        console.error("❌ Logout failed:", res.message || "Unknown error");
+        setError(res.message || "Logout failed. Please try again.");
+      }
+    } catch (error: any) {
+      console.error("🔥 Logout error:", error?.response?.data || error.message);
+      setError("Logout failed. Please try again.");
+    } finally {
+      setIsLoadingLogOut(false);
     }
   };
 
