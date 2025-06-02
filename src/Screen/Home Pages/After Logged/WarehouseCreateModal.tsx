@@ -498,15 +498,22 @@ export default function WarehouseCreateModal() {
                 />
                 <input
                   type="number"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   placeholder="Amount"
                   className="input input-bordered"
                   value={p.amount}
                   onChange={(e) => {
-                    const updated = [...form.price];
-                    updated[i].amount = Number(e.target.value); // ✅ Convert to number
-                    setForm({ ...form, price: updated });
+                    const value = e.target.value;
+                    // Allow only digits
+                    if (/^\d*$/.test(value)) {
+                      const updated = [...form.price];
+                      updated[i].amount = Number(value);
+                      setForm({ ...form, price: updated });
+                    }
                   }}
                 />
+
                 <select
                   className="select select-bordered"
                   value={p.isMonthly ? "true" : "false"}
