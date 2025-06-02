@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
@@ -15,8 +16,9 @@ export default function HeroSection() {
               <br /> Connect with verified businesses looking for spaces like
               yours.
             </p>
-
-            <button className="btn btn-primary">Get Started</button>
+            <Link to={"/signin"}>
+              <button className="btn btn-primary">Get Started</button>
+            </Link>
           </div>
           <img
             src="https://res.cloudinary.com/dyrapz6bn/image/upload/v1744231517/x7fxcmy57kseaf3jqtcz.png"

@@ -84,13 +84,8 @@ export default function WarehousesHero() {
             </button>
           </div>
 
-          {loading ? (
-            <div className="flex flex-col items-center justify-center h-60 text-gray-400">
-              <ClipboardList className="animate-pulse w-8 h-8 mb-2" />
-              <p className="text-sm">Loading warehouses...</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
+          <div className="overflow-x-auto">
+            <div className="overflow-x-auto min-h-[15rem] flex flex-col items-center justify-center">
               <table className="table w-full text-sm md:text-base">
                 <thead>
                   <tr className="text-gray-400">
@@ -100,78 +95,93 @@ export default function WarehousesHero() {
                     <th>Rent/Sell</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {warehouses.map((warehouse) => (
-                    <tr
-                      onClick={() => handleWarehouseClick(warehouse._id)}
-                      key={warehouse._id}
-                    >
-                      <td>{warehouse.name}</td>
-                      <td>{warehouse.city}</td>
-                      <td>
-                        <span
-                          className={`badge border-0 px-3 py-1 rounded text-xs font-semibold ${
-                            warehouse.WarehouseStatus === "Available"
-                              ? "bg-green-800 text-green-200"
-                              : warehouse.WarehouseStatus === "Rented"
-                              ? "bg-yellow-700 text-yellow-200"
-                              : warehouse.WarehouseStatus === "Sold"
-                              ? "bg-red-800 text-red-200"
-                              : "bg-gray-700 text-gray-300"
-                          }`}
-                        >
-                          {warehouse.WarehouseStatus}
-                        </span>
-                      </td>
-
-                      <td>
-                        <span
-                          className={`badge border-0 ${
-                            warehouse.rentOrSell === "Rent"
-                              ? "bg-green-900 text-green-200"
-                              : "bg-amber-900 text-amber-300"
-                          }`}
-                        >
-                          {warehouse.rentOrSell}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
               </table>
 
-              {/* Pagination Controls */}
-              <div className="flex justify-center mt-6 space-x-2">
-                <button
-                  className="btn btn-sm"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Prev
-                </button>
-                {[...Array(totalPages)].map((_, i) => (
-                  <button
-                    key={i}
-                    className={`btn btn-sm ${
-                      currentPage === i + 1
-                        ? "btn-primary"
-                        : "btn-outline text-white"
-                    }`}
-                    onClick={() => handlePageChange(i + 1)}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
-                <button
-                  className="btn btn-sm"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  Next
-                </button>
-              </div>
+              {loading ? (
+                <div className="flex flex-col items-center justify-center h-60 text-gray-400">
+                  <ClipboardList className="animate-pulse w-8 h-8 mb-2" />
+                  <p className="text-sm">Loading warehouses...</p>
+                </div>
+              ) : warehouses.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-60 text-gray-400">
+                  <ClipboardList className="w-8 h-8 mb-2" />
+                  <p className="text-sm">No warehouses found.</p>
+                </div>
+              ) : (
+                <table className="table w-full text-sm md:text-base">
+                  <tbody>
+                    {warehouses.map((warehouse) => (
+                      <tr
+                        onClick={() => handleWarehouseClick(warehouse._id)}
+                        key={warehouse._id}
+                        className="cursor-pointer hover:bg-gray-800"
+                      >
+                        <td>{warehouse.name}</td>
+                        <td>{warehouse.city}</td>
+                        <td>
+                          <span
+                            className={`badge border-0 px-3 py-1 rounded text-xs font-semibold ${
+                              warehouse.WarehouseStatus === "Available"
+                                ? "bg-green-800 text-green-200"
+                                : warehouse.WarehouseStatus === "Rented"
+                                ? "bg-yellow-700 text-yellow-200"
+                                : warehouse.WarehouseStatus === "Sold"
+                                ? "bg-red-800 text-red-200"
+                                : "bg-gray-700 text-gray-300"
+                            }`}
+                          >
+                            {warehouse.WarehouseStatus}
+                          </span>
+                        </td>
+                        <td>
+                          <span
+                            className={`badge border-0 ${
+                              warehouse.rentOrSell === "Rent"
+                                ? "bg-green-900 text-green-200"
+                                : "bg-amber-900 text-amber-300"
+                            }`}
+                          >
+                            {warehouse.rentOrSell}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
-          )}
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-6 space-x-2">
+              <button
+                className="btn btn-sm"
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Prev
+              </button>
+              {[...Array(totalPages)].map((_, i) => (
+                <button
+                  key={i}
+                  className={`btn btn-sm ${
+                    currentPage === i + 1
+                      ? "btn-primary"
+                      : "btn-outline text-white"
+                  }`}
+                  onClick={() => handlePageChange(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                className="btn btn-sm"
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          </div>
         </div>
 
         <WarehouseCreateModal />

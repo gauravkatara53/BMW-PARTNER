@@ -264,7 +264,6 @@ export default function WarehouseCreateModal() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
               "name",
-              "category",
               "about",
               "areaSqFt",
               "address",
@@ -283,6 +282,17 @@ export default function WarehouseCreateModal() {
                 value={(form as any)[field]}
               />
             ))}
+            <select
+              name="category"
+              className="select select-bordered"
+              onChange={handleChange}
+              value={form.category}
+            >
+              <option value="Storage">Storage</option>
+              <option value="Distribution">Distribution</option>
+              <option value="Fulfillment">Fulfillment</option>
+              <option value="Cold Storage">Cold Storage</option>
+            </select>
             <select
               name="rentOrSell"
               className="select select-bordered"

@@ -147,21 +147,23 @@ export default function Navbar() {
           {isAuthenticated ? (
             <div className=" navbar-end">
               <Link to={"/profile"}>
-                <div className="w-10 avatar  ">
+                <div className="w-10 h-10 avatar  ">
                   <img
                     src={
                       profile?.avatar ||
                       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSeatcmYRYsMNho5mAp9qySUzghxQYU_TPGw&s"
                     }
                     alt="profile"
-                    className="rounded-full"
+                    className="rounded-full w-10 h-20 object-cover"
                   />
                 </div>
               </Link>
             </div>
           ) : (
             <div className="navbar-end">
-              <a className="btn">Join Us</a>
+              <Link to={"/signin"}>
+                <a className="btn">Join Us</a>
+              </Link>
             </div>
           )}
         </div>
