@@ -10,6 +10,7 @@ import WarehouseProfile from "./Screen/Warehouse/WarehousePage";
 import PricingPage from "./Screen/Pricing/Pricing";
 import SupportPage from "./Screen/Support-page/support-page";
 import HowItWorks from "./Screen/HowItWork/HowItWorks";
+import BankAccountPage from "./Screen/BankAccount/bankaccount";
 
 export default function App() {
   const { isAuthenticated } = useAuth();
@@ -32,8 +33,9 @@ export default function App() {
             element={<WarehouseProfile />}
           />
           <Route path="/pricing" element={<PricingPage />} />
-           <Route path="/support" element={<SupportPage />} />
-            <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/bank-account" element={<BankAccountPage />} />
         </Routes>
       </Router>
     </>

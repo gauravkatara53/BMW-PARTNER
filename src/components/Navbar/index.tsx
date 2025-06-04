@@ -141,6 +141,15 @@ export default function Navbar() {
                   <a>Support</a>
                 </li>
               </Link>
+              <li>
+                {isAuthenticated ? (
+                  <div className=" navbar-end mx-6">
+                    <Link to={"/bank-account"}>Bank</Link>
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </li>
             </ul>
           </div>
 
