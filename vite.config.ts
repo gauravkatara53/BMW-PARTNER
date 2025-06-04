@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://bmw-backend-l85a.onrender.com", // Your Render backend URL
+        target: "http://localhost:5001/", // Your Render backend URL
         changeOrigin: true,
         secure: true, // Ensure HTTPS is used
       },

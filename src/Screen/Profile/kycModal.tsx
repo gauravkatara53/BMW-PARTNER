@@ -6,7 +6,7 @@ interface KYCModalProps {
   onSuccess: () => void;
 }
 
-const documentTypes = ["Aadhaar", "PAN", "DL", "Other"];
+const documentTypes = ["Aadhar", "PAN", "Passport", "Driving License"];
 
 export default function KYCModal({ onClose, onSuccess }: KYCModalProps) {
   const [nameOnDocument, setNameOnDocument] = useState("");
