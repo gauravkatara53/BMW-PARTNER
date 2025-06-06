@@ -29,7 +29,7 @@ interface Warehouse {
   WarehouseStatus: string;
   address: string;
   city: string;
-  pincode: number;
+  postalCode: number;
   state: string;
   country: string;
   areaSqFt: string;
@@ -151,7 +151,7 @@ const WarehouseProfile: React.FC = () => {
               <p className="text-gray-400 mb-2">{warehouse.about}</p>
               <p className="text-sm text-gray-500">
                 {warehouse.address}, {warehouse.city}, {warehouse.state},{" "}
-                {warehouse.country} - {warehouse.pincode}
+                {warehouse.country} - {warehouse.postalCode}
               </p>
               <div className="mt-4 space-x-2">
                 <span className="badge badge-success">
@@ -365,29 +365,52 @@ const WarehouseProfile: React.FC = () => {
                             <table className="table w-full">
                               <thead>
                                 <tr>
-                                  <th>Month</th>
+                                  {/* Only show Month column if not Sold */}
+                                  {order?.WarehouseDetail?.WarehouseStatus !==
+                                    "Sold" && <th>Month</th>}
                                   <th>Amount</th>
                                   <th>Status</th>
                                 </tr>
                               </thead>
                               <tbody>
-                                {order.monthlyPayment.map(
-                                  (p: any, i: number) => (
-                                    <tr key={i}>
-                                      <td>{p.month}</td>
-                                      <td>₹{p.amount}</td>
-                                      <td>
-                                        <span
-                                          className={`badge ${
-                                            p.paymentForPartnerByBMW === "Paid"
-                                              ? "badge-success"
-                                              : "badge-error"
-                                          }`}
-                                        >
-                                          {p.paymentForPartnerByBMW}
-                                        </span>
-                                      </td>
-                                    </tr>
+                                {order?.WarehouseDetail?.WarehouseStatus ===
+                                "Sold" ? (
+                                  // Sold order — one-time payment
+                                  <tr>
+                                    <td>₹{order?.totalPrice || "N/A"}</td>
+                                    <td>
+                                      <span
+                                        className={`badge ${
+                                          order?.paymentFromBMWSold === "Paid"
+                                            ? "badge-success"
+                                            : "badge-error"
+                                        }`}
+                                      >
+                                        {order?.paymentFromBMWSold || "Unpaid"}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                ) : (
+                                  // Rent order — show monthly payments
+                                  order?.monthlyPayment?.map(
+                                    (p: any, i: number) => (
+                                      <tr key={i}>
+                                        <td>{p.month}</td>
+                                        <td>₹{p.amount}</td>
+                                        <td>
+                                          <span
+                                            className={`badge ${
+                                              p.paymentForPartnerByBMW ===
+                                              "Paid"
+                                                ? "badge-success"
+                                                : "badge-error"
+                                            }`}
+                                          >
+                                            {p.paymentForPartnerByBMW}
+                                          </span>
+                                        </td>
+                                      </tr>
+                                    )
                                   )
                                 )}
                               </tbody>
